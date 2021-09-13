@@ -38,3 +38,5 @@ def showArmyShop(request):
         'data' : course
     }
     return render(request, 'secondapp/showArmyShop.html', context)
+
+    
