@@ -35,3 +35,6 @@ class JejuOlle(models.Model):
 
 #     class Meta:
 #         db_table = 'jeju_olle'
+
+
+
