@@ -32,7 +32,16 @@ def show(request):
 
 from .models import AmyShop
 def showArmyShop(request):
-    course = AmyShop.objects.all()
+    prd = request.GET.get('prd')
+    course = AmyShop.objects.filter(name__contains=prd)
+    print(course)
+    context = {
+        'data' : course
+    }
+    return render(request, 'secondapp/showArmyShop.html', context)
+
+def showArmyShop2(request, year, month):
+    course = AmyShop.objects.filter(year=year, month=month)
     print(course)
     context = {
         'data' : course

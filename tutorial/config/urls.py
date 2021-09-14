@@ -22,6 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index1/', views.index1),
     path('index2/', views.index2),
+    path('dict/', c_views.dict),
+    path('list/', c_views.list),
+
+
     path('first/', include('firstapp.urls')),
     path('second/', include('secondapp.urls')),
     path('home/', c_views.home),
