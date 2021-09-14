@@ -14,27 +14,28 @@ class Shop(models.Model):
         app_label = 'thirdapp'
 
 class JejuOlle(models.Model):
-    course = CharField(max_length=100, null=True)
-    course_name = CharField(max_length=100, null=True)
+    course = CharField(max_length=10)
+    course_name = CharField(max_length=20)
     distance = FloatField()
-    time_info = CharField(max_length=100, null=True)
-    start_end_info = CharField(max_length=100, null=True)
+    time_info = CharField(max_length=10)
+    start_end_info = CharField(max_length=30)
     cre_date = DateField()
+
     class Meta:
         db_table = 'jeju_olle'
-        app_label = 'thirdapp'
 
-# 강사님 코드
-# class JejuOlle(models.Model):
-#     course = CharField(max_length=10)
-#     course_name = CharField(max_length=20)
-#     distance = FloatField()
-#     time_info = CharField(max_length=10)
-#     start_end_info = CharField(max_length=30)
-#     cre_date = DateField()
+class Dept(models.Model):
+    deptno = models.IntegerField(primary_key=True)  # 기본키 지정
+    dname = models.CharField(max_length=14)
+    loc = models.CharField(max_length=13)
 
-#     class Meta:
-#         db_table = 'jeju_olle'
+    class Meta:
+        db_table = 'dept'
 
+class Emp(models.Model):
+    empno = models.IntegerField(primary_key=True)
+    ename = models.CharField(max_length=10)
+    dept = models.ForeignKey(Dept, db_column='deptno', on_delete=models.CASCADE)
 
-
+    class Meta:
+        db_table = 'emp'
