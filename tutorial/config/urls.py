@@ -30,6 +30,7 @@ urlpatterns = [
     path('second/', include('secondapp.urls')),
     path('home/', c_views.home),
     path('third/', include('thirdapp.urls')),
+    path('article/', include('article.urls')),
     
 ]
 

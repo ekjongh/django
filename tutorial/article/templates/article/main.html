@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>KT</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"></link>
+        <style media="screen">
+            .alert{display: none;}
+        </style>
+    </head>
+    <body>
+        <div class="container pt-5">
+            
+            <h3>KT 문장 카테고리 분류기</h3>
+            
+            <div class="row">
+                <input class="form-control col-9 sentence" type="text" placeholder="문장을 입력하세요.">
+                <button type="button" class="btn btn-danger col-3 prediction">Prediction</button>
+            </div>
+            <div class="row">
+                <div class="col-12 alert alert-success mt-3" role="alert"></div>
+            </div>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                $(".prediction").on("click", function(){
+                    var sentence = $(".sentence").val();
+                    var url = "http://127.0.0.1:8000/article/predict?sentence=" + sentence;
+                    $.getJSON(url, function(response){
+                        console.log(response);
+                        $(".alert").html(response.pred);
+                        $(".alert").show();
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>
