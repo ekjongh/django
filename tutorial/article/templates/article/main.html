@@ -26,7 +26,7 @@
             $(document).ready(function(){
                 $(".prediction").on("click", function(){
                     var sentence = $(".sentence").val();
-                    var url = "http://127.0.0.1:8000/article/predict?sentence=" + sentence;
+                    var url = "http://146.56.102.22/article/predict?sentence=" + sentence;
                     $.getJSON(url, function(response){
                         console.log(response);
                         $(".alert").html(response.pred);
