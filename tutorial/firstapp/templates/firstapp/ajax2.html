@@ -1,0 +1,73 @@
+<script>
+/*
+    const ajax = fetch('/first/req/get/?a=10&b=20&c=30');
+
+    ajax.then(function(response) {
+        return response.text();
+    }).then(function(result) {
+        console.log(result);
+    });
+*/
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+/* POST 방식 
+    const csrftoken = getCookie('csrftoken');
+    const formData = new FormData();
+    formData.append('csrfmiddlewaretoken', csrftoken);
+    formData.append('a', 10);
+    formData.append('b', 20);
+    formData.append('c', 30);
+
+    const ajax = fetch('/first/req/post/', {
+        method: 'post',
+        body: formData
+    });
+    
+    ajax.then(function(a) {
+     
+        a.text().then(function(b) {
+            console.log(b)
+        })
+    })
+/*
+    ajax.then(function(response) {
+        return response.text();
+    }).then(function(result) {
+        console.log(result);
+    });
+
+*/
+
+const csrftoken = getCookie('csrftoken');
+    const formData = new FormData();
+    formData.append('a', 10);
+    formData.append('b', 20);
+    formData.append('c', 30);
+    const ajax = fetch('/first/req/json/', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify(Object.fromEntries(formData))
+    });
+    ajax.then(function (response) {
+        return response.json();
+    }).then(function (result) {
+        console.log(result);
+    });
+
+</script>

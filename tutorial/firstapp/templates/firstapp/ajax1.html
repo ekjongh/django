@@ -1,0 +1,28 @@
+<body>
+    <ul>
+        <li>1번</li>
+    </ul>
+</body>
+
+<script>
+    function abc() {
+        alert("Hello")
+    }
+    let def = abc
+    def()
+    
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = callback;
+    xhr.open('get', '/first/req/get/?a=100&b=200&c=300');
+    xhr.send(null);
+    function callback() {
+        if(xhr.readyState == 4) {
+            if(xhr.status == 200) {
+                let result = xhr.response;
+                console.log(result);
+                result = `<li>${result}</li>`; // backtick
+                document.querySelector('ul').innerHTML += result
+            }
+        }
+    }
+</script>

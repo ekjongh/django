@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render
 
 # Create your views here.
@@ -44,3 +45,52 @@ def show(request):
     # for c in curriculum:
     #     result += c.name + '<br>'
     # return HttpResponse(result)
+
+
+def req_get(request):
+    a = request.GET.get('a')
+    b = request.GET.get('b')
+    c = request.GET.get('c')
+    # c = request.GET['c'] # get() 에러 없음
+    #                      # GET['c'] 에러가 날 수 있음
+    result = '%s %s %s' % (a, b, c)
+    return HttpResponse(result)
+
+def req_post(request):
+    if request.method == 'POST':
+        a = request.POST.get('a')
+        b = request.POST.get('b')
+        c = request.POST['c']
+        result = '%s %s %s' % (a, b, c)
+        return HttpResponse(result)
+    return render(request, 'firstapp/post.html')
+
+
+def req_ajax1(request):
+    return render(request, 'firstapp/ajax1.html')
+
+def req_ajax2(request):
+    return render(request, 'firstapp/ajax2.html')
+
+
+import json
+from django.forms.models import model_to_dict
+def req_json(request):
+    obj = request.body.decode("utf-8")
+    data = json.loads(obj)
+
+    # Curriculum 데이터를 JSON으로 응답
+    # 1. 데이터 조회
+    cur = Curriculum.objects.all()
+    # QuerySet 이상한 형태 dict X, list X, 기본 자료형 X
+    
+    # 2. JSON 응답을 위한 형태로 변경
+    c_list = []
+    for c in cur:
+            c = model_to_dict(c)
+            c_list.append(c)
+    
+    return JsonResponse(c_list, safe=False)
+
+def req_ajax4(request):
+    return render(request, 'firstapp/ajax4.html')

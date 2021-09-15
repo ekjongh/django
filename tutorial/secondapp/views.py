@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render
 
 from django.http import HttpResponse
@@ -49,3 +50,41 @@ def showArmyShop2(request, year, month):
     return render(request, 'secondapp/showArmyShop.html', context)
 
     
+def req_ajax(request):
+    return render(request, 'secondapp/ajax.html')
+
+def req_ajax_get(request):
+    print("req_ajax_get")
+    a = request.GET.get('a')
+    b = request.GET.get('b')
+    c = request.GET.get('c')
+    # c = request.GET['c'] # get() 에러 없음
+    #                      # GET['c'] 에러가 날 수 있음
+    result = '%s %s %s' % (a, b, c)
+    return HttpResponse(result)
+
+def req_ajax_post(request):
+    print("req_ajax_get")
+    a = request.GET.get('a')
+    b = request.GET.get('b')
+    c = request.GET.get('c')
+    # c = request.GET['c'] # get() 에러 없음
+    #                      # GET['c'] 에러가 날 수 있음
+    result = '%s %s %s' % (a, b, c)
+    return HttpResponse(result)
+
+import json
+from django.forms.models import model_to_dict
+def req_ajax_json(request):
+    obj = request.body.decode("utf-8")
+    data = json.loads(obj)
+
+    co = Course.objects.all()
+    c_list = []
+    for c in co:
+            c = model_to_dict(c)
+            c_list.append(c)
+    
+    return JsonResponse(c_list, safe=False)
+
+
