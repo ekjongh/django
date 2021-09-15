@@ -39,7 +39,7 @@
             console.log("#get")
 
             var name = $(".name").val();
-            const ajax = fetch('/second/req/ajax/get1/?name=' + name);
+            const ajax = fetch('/second/req/ajax/get/?name=' + name);
             ajax.then(function(response) {
                 return response.text();
             }).then(function(result) {

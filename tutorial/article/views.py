@@ -21,6 +21,6 @@ def predict(request):
     pred = model.predict([sentence])[0] # pred : 105
     result["pred"] = result["category"][pred - 100]
     
-    print(sentence, result["pred"])
+    print({ 'pred' : result["pred"]})
 
     return JsonResponse({ 'pred' : result["pred"]})

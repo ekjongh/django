@@ -23,6 +23,7 @@
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
+        /*
             $(document).ready(function(){
                 $(".prediction").on("click", function(){
                     var sentence = $(".sentence").val();
@@ -34,6 +35,20 @@
                     })
                 })
             })
+        */
+            document.querySelector('.prediction').addEventListener('click', () => {
+   
+                   var sentence = $(".sentence").val();
+                const ajax = fetch('/article/predict/?sentence=' + sentence);
+                ajax.then(function(response) {
+                    return response.json();
+                }).then(function(result) {
+                    console.log(result);
+                    $(".alert").html(result.pred);
+                    $(".alert").show();
+                });
+            });
+
         </script>
     </body>
 </html>
