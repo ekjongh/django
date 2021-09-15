@@ -1,0 +1,101 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"></link>
+</head>
+<body>
+    <div class="container pt-5">
+        <h3>교육 과정 검색</h3>
+        <div class="row">
+            <input class="form-control col-6 name" type="text" placeholder="검색하고자 하는 단어를 입력하세요.">
+            <button id='get' class="btn btn-secondary col-2 active">GET</button>
+            <button id='post' class="btn btn-primary col-2 active">POST</button>
+            <button id='json' class="btn btn-success col-2 active">JSON</button>
+            {% csrf_token %}
+        </div>
+        <div class="row">
+            <div class="col-12 alert alert-success mt-3" role="alert"></div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // GET 방식
+        document.querySelector('#get').addEventListener('click', () => {
+            
+            console.log("#get")
+
+            var name = $(".name").val();
+            const ajax = fetch('/second/req/ajax/get1/?name=' + name);
+            ajax.then(function(response) {
+                return response.text();
+            }).then(function(result) {
+                console.log(result);
+                $(".alert").html(result);
+                $(".alert").show();
+            });
+        });
+
+        // POST 방식 
+        document.querySelector('#post').addEventListener('click', () => {
+            console.log("#post")
+            const csrftoken = getCookie('csrftoken');
+            var name = $(".name").val();
+            const formData = new FormData();
+            formData.append('csrfmiddlewaretoken', csrftoken);
+            formData.append('name', name);
+
+            const ajax = fetch('/second/req/ajax/post/', {
+                method: 'post',
+                body: formData
+            });
+
+            ajax.then(function(response) {
+                return response.text();
+            }).then(function(result) {
+                console.log(result);
+                $(".alert").html(result);
+                $(".alert").show();
+            });
+        });
+
+        // JSON
+        document.querySelector('#json').addEventListener('click', () => {
+            console.log("#json")
+            const csrftoken = getCookie('csrftoken');
+            const formData = new FormData();
+            formData.append('a', 10);
+            formData.append('b', 20);
+            formData.append('c', 30);
+            const ajax = fetch('/second/req/ajax/json/', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            });
+            ajax.then(function (response) {
+                return response.json();
+            }).then(function (result) {
+                console.log(result);
+                $(".alert").html(result);
+                $(".alert").show();
+            });
+        });
+
+    </script>
+</body>

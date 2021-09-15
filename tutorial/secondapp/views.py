@@ -50,31 +50,42 @@ def showArmyShop2(request, year, month):
     return render(request, 'secondapp/showArmyShop.html', context)
 
     
-def req_ajax(request):
-    return render(request, 'secondapp/ajax.html')
+def req_ajax_exam(request):
+    return render(request, 'secondapp/ajax_exam.html')
 
+from django.forms.models import model_to_dict
 def req_ajax_get(request):
     print("req_ajax_get")
-    a = request.GET.get('a')
-    b = request.GET.get('b')
-    c = request.GET.get('c')
-    # c = request.GET['c'] # get() 에러 없음
-    #                      # GET['c'] 에러가 날 수 있음
-    result = '%s %s %s' % (a, b, c)
-    return HttpResponse(result)
+    name = request.GET.get('name')
+    # print("name:", name)
+    if len(name) > 0:
+        co = Course.objects.filter(name__contains=name)
+    else:
+        co = Course.objects.all()
+    c_list = []
+    for c in co:
+            c = model_to_dict(c)
+            c_list.append(c)
+    
+    return HttpResponse(c_list)
 
 def req_ajax_post(request):
-    print("req_ajax_get")
-    a = request.GET.get('a')
-    b = request.GET.get('b')
-    c = request.GET.get('c')
-    # c = request.GET['c'] # get() 에러 없음
-    #                      # GET['c'] 에러가 날 수 있음
-    result = '%s %s %s' % (a, b, c)
-    return HttpResponse(result)
+    print("req_ajax_post")
+    name = request.POST.get('name')
+    # print("name:", type(name))
+    # co = Course.objects.all()
+    if name is None:
+        co = Course.objects.all()
+    else:
+        co = Course.objects.filter(name__contains=name)
+    c_list = []
+    for c in co:
+            c = model_to_dict(c)
+            c_list.append(c)
+
+    return HttpResponse(c_list)
 
 import json
-from django.forms.models import model_to_dict
 def req_ajax_json(request):
     obj = request.body.decode("utf-8")
     data = json.loads(obj)
