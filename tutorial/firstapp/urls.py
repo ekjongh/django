@@ -18,5 +18,9 @@ urlpatterns = [
 
     path('req/ajax4/', views.req_ajax4),
 
+    path('static/', views.static),
+    path('var/', views.var),
+    path('tag/', views.tag),
+
     
 ]

@@ -94,3 +94,33 @@ def req_json(request):
 
 def req_ajax4(request):
     return render(request, 'firstapp/ajax4.html')
+
+def static(request):
+    return render(request, 'firstapp/static.html')
+
+def var(request):
+    data = {
+        'str': 'text', 'num': 10,
+        'list': [1, 2, 3],
+        'dict': {'a': 'aaa', 'b': 'bbb'}
+    }
+    return render(request, 'firstapp/var.html', data)
+
+from secondapp.models import AmyShop
+def tag(request):
+
+    shops = AmyShop.objects.all()[:10] # 10개만 가져옴
+
+    persons = [
+        { 'num': 1, 'name': 'Park', 'score': 100 },
+        { 'num': 2, 'name': 'Choi', 'score': 70 },
+        { 'num': 3, 'name': 'Kim', 'score': 80 }
+    ]
+    animals = ['Cat', 'Dog']
+    context = {
+        'persons': persons,
+        'animals': animals,
+        'shops' : shops
+    }
+    return render(
+        request, 'firstapp/tag.html', context)
