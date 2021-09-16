@@ -1,0 +1,19 @@
+{% extends 'firstapp/layout.html' %}
+{% block content %}
+<form>
+    아 이 디 : <input type="text"><br>
+    비밀번호 : <input type="text">
+</form>
+{% endblock %}
+{% block footer %}
+<address>부산 해운대구 우동</address>
+
+{% include 'firstapp/ad.html' %}
+
+{% endblock %}
+{% block header %}
+<h4>
+    부산 해운대구 중동 ·좌동 ·우동에 걸쳐 있는 해수욕장.
+    백사장 길이 1.8km, 너비 35~50m, 면적 7만 2000㎡이다.
+</h4>
+{% endblock %}

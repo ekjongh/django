@@ -1,5 +1,11 @@
 from django.http import HttpResponse
 from django.http.response import JsonResponse
+from django.shortcuts import render
+
+def index(request): # request 파라미터 필수
+    # do something....
+    # return HttpResponse('<u>View</u>')
+    return render(request, 'index.html')
 
 def home(request): # request 파라미터 필수
     # do something....

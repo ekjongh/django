@@ -1,11 +1,12 @@
 from django.http.response import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from django.http import HttpResponse
 
 def main(request): # request 파라미터 필수
     # do something....
-    return HttpResponse('<u>Second Main</u>')
+    return render(request, 'secondapp/main.html')
+    # return HttpResponse('<u>Second Main</u>')
 
 from .models import Course
 def insert(request): # request 파라미터 필수
@@ -33,11 +34,14 @@ def show(request):
 
 from .models import AmyShop
 def showArmyShop(request):
-    prd = request.GET.get('prd')
-    course = AmyShop.objects.filter(name__contains=prd)
-    print(course)
+    # prd = request.GET.get('prd', '')
+    prd = request.GET.get('prd') # None(X)
+    if not prd:
+        prd = ''
+    shop = AmyShop.objects.filter(name__contains=prd)
+    # print(shop)
     context = {
-        'data' : course
+        'data' : shop
     }
     return render(request, 'secondapp/showArmyShop.html', context)
 
@@ -98,4 +102,17 @@ def req_ajax_json(request):
     
     return JsonResponse(c_list, safe=False)
 
+from .forms import CourseForm
+def course_create(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('secondapp:show')
+    else:
+        form = CourseForm()
+    return render(
+        request, 'secondapp/course_create.html',
+        {'form': form}
+    )
 

@@ -1,5 +1,5 @@
 from django.http.response import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 # Create your views here.
 # 두뇌, controller
@@ -124,3 +124,38 @@ def tag(request):
     }
     return render(
         request, 'firstapp/tag.html', context)
+
+def custom_filter(request):
+    context = { 'price': 39800.5 }
+    return render(
+    request, 'firstapp/custom_filter.html', context)
+
+def template(request):
+    return render(
+    request, 'firstapp/template.html')
+
+
+from .forms import NameForm
+def form_basic(request):
+    if request.method == 'POST':
+        form = NameForm(request.POST)
+    else:
+        form = NameForm()
+    return render(
+        request, 'firstapp/form_basic.html',
+        { 'form': form }
+    )
+
+from .forms import CurriculumForm
+def form_model(request):
+    if request.method == 'POST':
+        form = CurriculumForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/first/form/model/')
+    else:
+        form = CurriculumForm()
+    return render(
+        request, 'firstapp/form_model.html',
+        {'form': form}
+    )

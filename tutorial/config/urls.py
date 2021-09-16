@@ -19,6 +19,7 @@ from firstapp import views
 from . import views as c_views
 
 urlpatterns = [
+    path('', c_views.index),   
     path('admin/', admin.site.urls),
     path('index1/', views.index1),
     path('index2/', views.index2),
